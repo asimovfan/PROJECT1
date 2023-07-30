@@ -168,49 +168,26 @@ function WelcomeScreen({ navigation }) {
     setDutyStartEnd(name);
   };
 
-  /*const DetailsToBeSent = {
-    userId: FetchedMesssage.userId,
-    dutyId: FetchedMesssage.dutyId,
-    locationName: SelectedStation,
+  const renderGridItem = ({ item, index }) => {
+    return (
+      <TouchableOpacity
+        onPress={() => getItem(item, index)}
+        style={styles.gridItem}
+      >
+        <Text style={styles.goalText}>{item}</Text>
+      </TouchableOpacity>
+    );
   };
-
-  const ItemDetails = {
-    Stationname: SelectedStation,
-    UserPno: FetchedMesssage.userPno,
-    DutyId: FetchedMesssage.dutyId,
-  };
-
-  const DutyTypeDetails = {
-    Stationname: DutyStartEnd,
-    UserPno: FetchedMesssage.userPno,
-    DutyId: FetchedMesssage.dutyId,
-  };*/
   return (
     <View style={styles.appContainer}>
       <View style={styles.listContainer}>
-        <View>
-          <Text style={styles.text}>Choose space:</Text>
-        </View>
         <FlatList
           data={Description}
-          renderItem={({ item, index }) => {
-            return (
-              <View style={styles.goalItem}>
-                <TouchableOpacity
-                  onPress={() => getItem(item, index)}
-                  style={styles.selecttext}
-                >
-                  <Text style={styles.goalText}>{item}</Text>
-                </TouchableOpacity>
-              </View>
-            );
-          }}
-          keyExtractor={(item, index) => {
-            return item;
-          }}
-          ItemSeparatorComponent={myItemSeparator}
-          ListEmptyComponent={myListEmpty}
-          alwaysBounceVertical={false}
+          renderItem={renderGridItem}
+          keyExtractor={(item, index) => index.toString()}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          ListEmptyComponent={() => <Text>No data found</Text>}
+          numColumns={2} // Change this to the desired number of columns
         />
       </View>
     </View>
@@ -361,8 +338,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#5e0acc",
   },
   goalText: {
-    color: "white",
     fontSize: 16,
-    fontWeight: "600",
+    color: "black",
+  },
+  gridItem: {
+    flex: 1,
+    margin: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "lightgray",
+    height: 150,
+    width: "50%",
+  },
+  separator: {
+    height: 1,
+    backgroundColor: "gray",
   },
 });
